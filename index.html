@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIP AI - Account Deletion</title>
+    <title>VIPAI - Account Deletion</title>
     <style>
         :root {
-            --primary-color: #8A2BE2; /* BlueViolet */
+            --primary-color: #8A2BE2;
+            /* BlueViolet */
             --primary-dark: #6a1b9a;
             --bg-color: #f4ecfb;
             --text-color: #333;
@@ -150,7 +152,7 @@
 
         .loader {
             display: none;
-            border: 3px solid rgba(255,255,255,0.3);
+            border: 3px solid rgba(255, 255, 255, 0.3);
             border-top: 3px solid var(--white);
             border-radius: 50%;
             width: 20px;
@@ -159,8 +161,13 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         .btn-text {
@@ -174,22 +181,25 @@
         }
     </style>
 </head>
+
 <body>
 
     <div class="container">
-        <div class="logo">VIP AI</div>
+        <div class="logo">VIPAI</div>
         <div class="subtitle">Account Deletion Request</div>
-        
+
         <p class="description">
-            To request the permanent deletion of your VIP AI account and all associated personal data from our systems, please submit your registered phone number.
+            To request the permanent deletion of your VIPAI account and all associated personal data from our systems,
+            please submit your registered phone number.
         </p>
 
         <form id="deletionForm">
             <div class="form-group">
                 <label for="phone">Registered Phone Number</label>
-                <input type="tel" id="phone" name="phone" placeholder="Enter 10-digit phone number" pattern="[0-9]{10}" maxlength="10" required>
+                <input type="tel" id="phone" name="phone" placeholder="Enter 10-digit phone number" pattern="[0-9]{10}"
+                    maxlength="10" required>
             </div>
-            
+
             <button type="submit" id="submitBtn">
                 <span class="btn-text">Submit Deletion Request</span>
                 <div class="loader" id="loader"></div>
@@ -197,16 +207,17 @@
         </form>
 
         <div id="responseMessage" class="message-box"></div>
-        
+
         <div class="footer">
-            &copy; <script>document.write(new Date().getFullYear())</script> VIP AI. All rights reserved.
+            &copy;
+            <script>document.write(new Date().getFullYear())</script> VIPAI. All rights reserved.
         </div>
     </div>
 
     <script>
-        document.getElementById('deletionForm').addEventListener('submit', async function(e) {
+        document.getElementById('deletionForm').addEventListener('submit', async function (e) {
             e.preventDefault();
-            
+
             const phoneInput = document.getElementById('phone').value;
             const submitBtn = document.getElementById('submitBtn');
             const btnText = document.querySelector('.btn-text');
@@ -245,7 +256,11 @@
                     showMessage(data.message || 'Account deletion request received successfully.', 'success');
                     document.getElementById('deletionForm').reset();
                 } else {
-                    showMessage(data.message || 'Failed to submit request. Please try again.', 'error');
+                    let errorMessage = data.message || 'Failed to submit request. Please try again.';
+                    if (data.errors && data.errors.length > 0) {
+                        errorMessage = data.errors[0].msg;
+                    }
+                    showMessage(errorMessage, 'error');
                 }
             } catch (error) {
                 showMessage('An error occurred while sending the request. Please check your connection and try again.', 'error');
@@ -264,4 +279,5 @@
         }
     </script>
 </body>
+
 </html>
